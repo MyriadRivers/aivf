@@ -82,7 +82,7 @@ function App({ signOut }) {
         <input type="file" onChange={handleFileChange}/>
         <br/>
         <br/>
-        <button onClick={handleSubmit} disabled={uploadDisabled}>Upload</button>
+        <button onClick={handleSubmit} disabled={uploadDisabled || video === undefined}>Upload</button>
         <br/>
         <br/>
         {uploadProgress != null && <div>uploading... {uploadProgress}%</div>}
