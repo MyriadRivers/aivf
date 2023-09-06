@@ -12,6 +12,7 @@ import { API, Auth, Storage, graphqlOperation } from "aws-amplify";
 
 import * as subscriptions from "./graphql/subscriptions"
 import * as mutations from "./graphql/mutations"
+import Video from "./ui-components/Video";
 
 function App({ signOut }) {
   const [video, setVideo] = useState();
@@ -64,7 +65,8 @@ function App({ signOut }) {
     ).subscribe({
       next: ({provider, value}) => {
         console.log("Received: " + JSON.stringify(value.data.addedVideo))
-        setURL(value.data.addedVideo.url);
+        let newURL = value.data.addedVideo.url
+        setURL(newURL);
         setUploadDisabled(false)
       },
       error: (error) => console.warn(error),
@@ -88,10 +90,7 @@ function App({ signOut }) {
         <br/>
         {uploadProgress == null && uploadDisabled && <Loader/>}
         <br/>
-        <br/>
-        {URL !== "" && <video controls>
-          <source src={URL} />
-        </video>}
+        {URL !== "" && <Video url={URL}/>}
       </Card>
       <Button onClick={signOut}>Sign Out</Button>
     </View>
