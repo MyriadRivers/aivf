@@ -76,7 +76,7 @@ function App({ signOut }) {
   return (
     <View className="App">
       <Card>
-        <Heading level={1}>Video Sonfication</Heading>
+        <Heading level={1}>Video Sonification</Heading>
         <br/>
         <br/>
         <input type="file" onChange={handleFileChange}/>
