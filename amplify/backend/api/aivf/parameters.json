@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "aivf",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authaivfb8f45db9",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

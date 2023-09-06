@@ -1,0 +1,31 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+# input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Video {
+  name: String!
+  owner: String!
+  url: String
+}
+
+type Query {
+  getVideo(name: String! owner: String!): Video!
+}
+
+type Subscription {
+  addedVideo(name: String! owner: String!): Video
+  @aws_subscribe(mutations: ["addVideo"])
+  requestedVideo: Video
+  @aws_subscribe(mutations: ["requestVideo"])
+}
+
+type Mutation {
+  addVideo(name: String! owner: String! url: String!): Video!
+  requestVideo(name: String! owner: String!): Video!
+}
