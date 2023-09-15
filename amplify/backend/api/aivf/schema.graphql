@@ -9,23 +9,24 @@ schema {
 }
 
 type Video {
+  id: String!
   name: String!
   owner: String!
   url: String
 }
 
 type Query {
-  getVideo(name: String! owner: String!): Video!
+  getVideo(id: String! name: String! owner: String!): Video!
 }
 
 type Subscription {
-  addedVideo(name: String! owner: String!): Video
+  addedVideo(id: String! name: String! owner: String!): Video
   @aws_subscribe(mutations: ["addVideo"])
   requestedVideo: Video
   @aws_subscribe(mutations: ["requestVideo"])
 }
 
 type Mutation {
-  addVideo(name: String! owner: String! url: String!): Video!
-  requestVideo(name: String! owner: String!): Video!
+  addVideo(id: String! name: String! owner: String! url: String!): Video!
+  requestVideo(id: String! name: String! owner: String!): Video!
 }

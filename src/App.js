@@ -17,6 +17,7 @@ import Video from "./ui-components/Video";
 function App({ signOut }) {
   const [video, setVideo] = useState();
 
+  const [objID, setObjID] = useState("");
   const [objKey, setObjKey] = useState("");
   const [user, setUser] = useState("");
 
@@ -42,6 +43,8 @@ function App({ signOut }) {
 
       let objectKey = objectPrefix + video.name;
       setObjKey(objectKey)
+      let id = crypto.randomUUID();
+      setObjID(id)
 
       await Storage.put(video.name, video, {
         progressCallback(progress) {
@@ -53,15 +56,17 @@ function App({ signOut }) {
 
       // Send the request for the video to be processed
       await API.graphql(
-        graphqlOperation(mutations.requestVideo, {name: objectKey, owner: currUser.id})
+        graphqlOperation(mutations.requestVideo, {id: id, name: objectKey, owner: currUser.id})
       );
+      console.log("Requesting video with parameters: " + String(id) + " " +  String(objectKey) + " " + String(currUser.id))
     }
     
   }
 
   useEffect(() => {
+    console.log("Awaiting add video with parameters: " + String(objID) + " " + String(objKey) + " " + String(user))
     API.graphql(
-      graphqlOperation(subscriptions.addedVideo, {name: objKey, owner: user})
+      graphqlOperation(subscriptions.addedVideo, {id: objID, name: objKey, owner: user})
     ).subscribe({
       next: ({provider, value}) => {
         console.log("Received: " + JSON.stringify(value.data.addedVideo))
@@ -71,7 +76,7 @@ function App({ signOut }) {
       },
       error: (error) => console.warn(error),
     });
-  }, [objKey, user])
+  }, [objKey, user, objID])
 
   return (
     <View className="App">

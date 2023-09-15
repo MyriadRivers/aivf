@@ -2,8 +2,9 @@
 // this is an auto generated file. This will be overwritten
 
 export const addedVideo = /* GraphQL */ `
-  subscription AddedVideo($name: String!, $owner: String!) {
-    addedVideo(name: $name, owner: $owner) {
+  subscription AddedVideo($id: String!, $name: String!, $owner: String!) {
+    addedVideo(id: $id, name: $name, owner: $owner) {
+      id
       name
       owner
       url
@@ -14,6 +15,7 @@ export const addedVideo = /* GraphQL */ `
 export const requestedVideo = /* GraphQL */ `
   subscription RequestedVideo {
     requestedVideo {
+      id
       name
       owner
       url

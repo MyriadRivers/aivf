@@ -2,8 +2,14 @@
 // this is an auto generated file. This will be overwritten
 
 export const addVideo = /* GraphQL */ `
-  mutation AddVideo($name: String!, $owner: String!, $url: String!) {
-    addVideo(name: $name, owner: $owner, url: $url) {
+  mutation AddVideo(
+    $id: String!
+    $name: String!
+    $owner: String!
+    $url: String!
+  ) {
+    addVideo(id: $id, name: $name, owner: $owner, url: $url) {
+      id
       name
       owner
       url
@@ -12,8 +18,9 @@ export const addVideo = /* GraphQL */ `
   }
 `;
 export const requestVideo = /* GraphQL */ `
-  mutation RequestVideo($name: String!, $owner: String!) {
-    requestVideo(name: $name, owner: $owner) {
+  mutation RequestVideo($id: String!, $name: String!, $owner: String!) {
+    requestVideo(id: $id, name: $name, owner: $owner) {
+      id
       name
       owner
       url
