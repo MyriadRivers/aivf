@@ -58,6 +58,7 @@ function App({ signOut }) {
       await API.graphql(
         graphqlOperation(mutations.requestVideo, {id: id, name: objectKey, owner: currUser.id})
       );
+      console.log(id)
       console.log("Requesting video with parameters: " + String(id) + " " +  String(objectKey) + " " + String(currUser.id))
     }
     
