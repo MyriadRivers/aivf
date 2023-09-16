@@ -107,7 +107,6 @@ function App({ signOut }) {
         <br/>
         <br/>
         {uploadProgress == null && uploadDisabled && <Loader/>}
-        <br/>
         {URL !== "" && <Video url={URL}/>}
       </Card>
       <Button onClick={signOut}>Sign Out</Button>

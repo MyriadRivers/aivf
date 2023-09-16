@@ -7,10 +7,14 @@ const Video = ({url}) => {
     }, [url]);
 
     return (
-        <video ref={videoRef} style={{maxWidth: `${window.innerWidth - 50}px`}} controls>
-          <source src={url} />
-          <a href={url} download>Download video</a>
-        </video>
+        <div>
+            <video ref={videoRef} style={{maxWidth: `${window.innerWidth - 50}px`}} controls>
+                <source src={url} />
+            </video>
+            <br/>
+            <a href={url} download>Download video</a>
+        </div>
+        
     )
 }
 
