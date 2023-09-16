@@ -7,14 +7,17 @@ import {
   Card,
   Loader,
 } from "@aws-amplify/ui-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { API, Auth, Storage, graphqlOperation } from "aws-amplify";
 
 import * as subscriptions from "./graphql/subscriptions"
 import * as mutations from "./graphql/mutations"
 import Video from "./ui-components/Video";
 
+import { getInfo } from "react-mediainfo"
+
 function App({ signOut }) {
+  const fileInputRef = useRef();
   const [video, setVideo] = useState();
 
   const [objID, setObjID] = useState("");
@@ -25,8 +28,17 @@ function App({ signOut }) {
   const [uploadProgress, setUploadProgress] = useState();
   const [uploadDisabled, setUploadDisabled] = useState(false);
   
-  const handleFileChange = (e) => {
-    setVideo(e.target.files[0]);
+  const handleFileChange = async (e) => {
+
+    let file = e.target.files[0];
+
+    let fileInfo = await getInfo(file)
+    if ("VideoCount" in fileInfo.media.track[0] && fileInfo.media.track[1].Duration <= 60) {
+      setVideo(file);
+    } else {
+      fileInputRef.current.value = null;
+      alert("Please upload a video file no longer than 1 minute long.")
+    }
   }
 
   const handleSubmit = async (event) => {
@@ -85,7 +97,7 @@ function App({ signOut }) {
         <Heading level={1}>Video Sonification</Heading>
         <br/>
         <br/>
-        <input type="file" onChange={handleFileChange}/>
+        <input type="file" onChange={handleFileChange} ref={fileInputRef}/>
         <br/>
         <br/>
         <button onClick={handleSubmit} disabled={uploadDisabled || video === undefined}>Upload</button>
