@@ -38,7 +38,7 @@ function App({ signOut }) {
       setVideo(file);
     } else {
       fileInputRef.current.value = null;
-      alert("Please upload a video file no longer than 1 minute long.")
+      alert("Please upload a video file no longer than 90 seconds long.")
     }
   }
 
