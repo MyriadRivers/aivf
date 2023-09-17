@@ -33,7 +33,8 @@ function App({ signOut }) {
     let file = e.target.files[0];
 
     let fileInfo = await getInfo(file)
-    if ("VideoCount" in fileInfo.media.track[0] && fileInfo.media.track[1].Duration <= 60) {
+     console.log(fileInfo)
+    if ("VideoCount" in fileInfo.media.track[0] && fileInfo.media.track[0].Duration <= 60) {
       setVideo(file);
     } else {
       fileInputRef.current.value = null;
