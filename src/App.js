@@ -82,7 +82,7 @@ function App({ signOut }) {
         level: "private"
       });
       setUploadFinished(true)
-      setURL(window.URL.createObjectURL(video))
+      // setURL(window.URL.createObjectURL(video))
       setSound(false)
 
       // Send the request for the video to be processed
