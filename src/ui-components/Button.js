@@ -9,6 +9,10 @@ const StyledButton = styled.button`
     border: 0px;
     border-radius: 30px;
     font-weight: bold;
+
+    :active {
+        background-color: #30814a;
+    }
 `
 
 const Button = ({onClick, text, disabled}) => {

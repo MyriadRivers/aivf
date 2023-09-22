@@ -21,14 +21,14 @@ const Video = ({url, sound}) => {
     const videoRef = useRef();
     useEffect(() => {    
         videoRef.current?.load();
-        videoRef.current?.play().catch((e) => {
-            console.log(e)
-        });
+        // videoRef.current?.play().catch((e) => {
+        //     console.log(e)
+        // });
     }, [url]);
 
     return (
         <StyledVideo>
-            <video ref={videoRef} style={{maxWidth: `${window.innerWidth - 50}px`}} muted={!sound} controls>
+            <video ref={videoRef} style={{maxWidth: `${window.innerWidth - 50}px`}} controls>
                 <source src={url} />
             </video>
             <br/>
