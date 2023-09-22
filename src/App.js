@@ -1,10 +1,6 @@
 import "@aws-amplify/ui-react/styles.css";
 import {
   withAuthenticator,
-  Button,
-  Heading,
-  View,
-  Card,
   Loader,
 } from "@aws-amplify/ui-react";
 import { useEffect, useRef, useState } from "react";
@@ -16,9 +12,23 @@ import Video from "./ui-components/Video";
 
 import { getInfo } from "react-mediainfo"
 
+import aivf_logo from "./resources/aivf_logo.gif"
+import styled from "styled-components";
+import GlobalStyle from "./globalStyles";
+import Header from "./ui-components/Header";
+import Button from "./ui-components/Button";
+
+const AppStyled = styled.div`
+  margin: 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`
+
 function App({ signOut }) {
   const fileInputRef = useRef();
   const [video, setVideo] = useState();
+  const [silentVid, setSilentVid] = useState(false);
 
   const [objID, setObjID] = useState("");
   const [objKey, setObjKey] = useState("");
@@ -66,6 +76,7 @@ function App({ signOut }) {
         },
         level: "private"
       });
+      setURL(URL.createObjectURL(video))
 
       // Send the request for the video to be processed
       await API.graphql(
@@ -93,25 +104,18 @@ function App({ signOut }) {
   }, [objKey, user, objID])
 
   return (
-    <View className="App">
-      <Card>
-        <Heading level={1}>Video Sonification</Heading>
-        <br/>
-        <br/>
-        <input type="file" onChange={handleFileChange} ref={fileInputRef}/>
-        <br/>
-        <br/>
-        <button onClick={handleSubmit} disabled={uploadDisabled || video === undefined}>Upload</button>
-        <br/>
-        <br/>
-        {uploadProgress != null && <div>uploading... {uploadProgress}%</div>}
-        <br/>
-        <br/>
-        {uploadProgress == null && uploadDisabled && <Loader/>}
-        {URL !== "" && <Video url={URL}/>}
-      </Card>
-      <Button onClick={signOut}>Sign Out</Button>
-    </View>
+    <AppStyled className="App">
+      <GlobalStyle />
+      <a href="https://aivf.co/"><img src={aivf_logo} width={200} alt="AIVF logo"/></a>
+      <Header text={"Video Sonification"}></Header>
+      Automatically generate music for any video you upload. Powered by AI.
+      {uploadProgress != null && <div>uploading... {uploadProgress}%</div>}
+      {uploadProgress == null && uploadDisabled && <Loader/>}
+      {URL !== "" && <Video url={URL}/>}
+      <input type="file" onChange={handleFileChange} ref={fileInputRef}/>
+      <Button onClick={handleSubmit} text={"Upload"} disabled={uploadDisabled || video === undefined} />
+      <Button onClick={signOut} text={"Sign Out"}/>
+    </AppStyled>
   );
 }
 
