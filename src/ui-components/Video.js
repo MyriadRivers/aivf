@@ -17,22 +17,24 @@ const StyledVideo = styled.div`
     }
 `
 
-const Video = ({url, sound}) => {
+const Video = ({url, hasSound}) => {
     const videoRef = useRef();
     useEffect(() => {    
         videoRef.current?.load();
-        // videoRef.current?.play().catch((e) => {
-        //     console.log(e)
-        // });
+        if (videoRef.current?.paused) {
+            videoRef.current?.play().catch((e) => {
+                console.log(e)
+            });
+        }
     }, [url]);
 
     return (
         <StyledVideo>
-            <video ref={videoRef} style={{maxWidth: `${window.innerWidth - 50}px`}} controls>
+            <video ref={videoRef} style={{maxWidth: `${window.innerWidth - 50}px`}} muted={!hasSound} controls>
                 <source src={url} />
             </video>
             <br/>
-            {sound && <a href={url} download>Download</a>}
+            {hasSound && <a href={url} download>Download</a>}
         </StyledVideo>   
     )
 }

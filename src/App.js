@@ -82,7 +82,7 @@ function App({ signOut }) {
         level: "private"
       });
       setUploadFinished(true)
-      // setURL(window.URL.createObjectURL(video))
+      setURL(window.URL.createObjectURL(video))
       setSound(false)
 
       // Send the request for the video to be processed
@@ -123,7 +123,7 @@ function App({ signOut }) {
       {uploadFinished && <Loader/>}
       {uploadFinished && "Generating music..."}
       {uploadProgress == null && !uploadDisabled && URL && "Video sonified!"}
-      {URL !== "" && <Video url={URL} sound={hasSound}/>}
+      {URL !== "" && <Video url={URL} hasSound={hasSound}/>}
       <Button onClick={handleSubmit} text={"Upload"} disabled={uploadDisabled || video === undefined} />
       <Button onClick={signOut} text={"Sign Out"}/>
     </AppStyled>
