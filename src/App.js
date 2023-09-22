@@ -23,12 +23,17 @@ const AppStyled = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  .home {
+    width: 200px;
+  }
 `
 
 function App({ signOut }) {
   const fileInputRef = useRef();
   const [video, setVideo] = useState();
-  const [silentVid, setSilentVid] = useState(false);
+  const [hasSound, setSound] = useState(false);
+  const [uploadFinished, setUploadFinished] = useState(false)
 
   const [objID, setObjID] = useState("");
   const [objKey, setObjKey] = useState("");
@@ -76,7 +81,9 @@ function App({ signOut }) {
         },
         level: "private"
       });
-      setURL(URL.createObjectURL(video))
+      setUploadFinished(true)
+      setURL(window.URL.createObjectURL(video))
+      setSound(false)
 
       // Send the request for the video to be processed
       await API.graphql(
@@ -96,6 +103,8 @@ function App({ signOut }) {
       next: ({provider, value}) => {
         console.log("Received: " + JSON.stringify(value.data.addedVideo))
         let newURL = value.data.addedVideo.url
+        setUploadFinished(false)
+        setSound(true)
         setURL(newURL);
         setUploadDisabled(false)
       },
@@ -106,13 +115,15 @@ function App({ signOut }) {
   return (
     <AppStyled className="App">
       <GlobalStyle />
-      <a href="https://aivf.co/"><img src={aivf_logo} width={200} alt="AIVF logo"/></a>
+      <a href="https://aivf.co/" className="home"><img src={aivf_logo} width={200} alt="AIVF logo"/></a>
       <Header text={"Video Sonification"}></Header>
       Automatically generate music for any video you upload. Powered by AI.
-      {uploadProgress != null && <div>uploading... {uploadProgress}%</div>}
-      {uploadProgress == null && uploadDisabled && <Loader/>}
-      {URL !== "" && <Video url={URL}/>}
       <input type="file" onChange={handleFileChange} ref={fileInputRef}/>
+      {uploadProgress != null && <div>uploading... {uploadProgress}%</div>}
+      {uploadFinished && <Loader/>}
+      {uploadFinished && "Generating music..."}
+      {uploadProgress == null && !uploadDisabled && URL && "Video sonified!"}
+      {URL !== "" && <Video url={URL} sound={hasSound}/>}
       <Button onClick={handleSubmit} text={"Upload"} disabled={uploadDisabled || video === undefined} />
       <Button onClick={signOut} text={"Sign Out"}/>
     </AppStyled>
