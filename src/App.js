@@ -29,8 +29,7 @@ const AppStyled = styled.div`
   }
 
   input[type=file] {
-    font-size: 20pt;
-    text-size-adjust: none;
+    all: initial
   }
 `
 
