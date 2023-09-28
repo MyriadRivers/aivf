@@ -29,7 +29,7 @@ const AppStyled = styled.div`
   }
 
   input[type=file] {
-    all: initial
+    font-size: initial
   }
 `
 
