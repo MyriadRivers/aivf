@@ -27,6 +27,10 @@ const AppStyled = styled.div`
   .home {
     width: 200px;
   }
+
+  input[type=file] {
+    font-size: 20pt;
+  }
 `
 
 function App({ signOut }) {
