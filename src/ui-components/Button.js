@@ -3,15 +3,21 @@ import styled from "styled-components";
 const StyledButton = styled.button`
     background-color: #38b561;
     color: white;
-    height: 50px;
     font-size: 20pt;
-    width: 200px;
+    width: 175px;
     border: 0px;
     border-radius: 30px;
-    font-weight: bold;
 
-    :active {
+    &:active {
         background-color: #30814a;
+    }
+
+    &:hover:enabled {
+        cursor: pointer;
+    }
+
+    &:disabled {
+        background-color: grey;
     }
 `
 

@@ -7,10 +7,8 @@ const StyledVideo = styled.div`
         background-color: #3ca7f5;
         color: white;
         text-decoration: none;
-        font-weight: bold;
         display: flex;
-        width: 200px;
-        height: 50px;
+        width: 175px;
         align-items: center;
         justify-content: center;
         border-radius: 30px;
